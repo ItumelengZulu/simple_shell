@@ -13,21 +13,26 @@
  * */
 
 #define MAX_COMMAND_LENGTH 120
+#define MAX_ARGUMENTS 9
 
 void display_prompt() {
     printf("$ "); /* Display a simple prompt i know that dollar sign */
 }
 
 int main() {
-    char command[MAX_COMMAND_LENGTH];
     pid_t pid;
+    char *args[MAX_ARGUMENTS];
+    char input[MAX_COMMAND_LENGTH];
 
     while (1) {
+	int argc;
+	char *token;
+
         display_prompt();
 
         /* Read a command from the user
 	 * diff between shell and kernal */
-        if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL) {
+        if (fgets(input, MAX_COMMAND_LENGTH, stdin) == NULL) {
             /* Handle end-of-file (Ctrl+D) 
 	     * to return the end of file use getc()  fgets()
 	     * */
@@ -36,7 +41,27 @@ int main() {
         }
 
         /* Remove the newline character at the end using string compliment span */
-        command[strcspn(command, "\n")] = '\0';
+        input[strcspn(input, "\n")] = '\0';
+
+	/* Tokenize the command line using strtok to get words from input
+	 * assign it to the pointer of the token then iterate to check if
+	 * there are more words in the token && argc
+	 * token then added to args array in the argc index
+	 * call strtok to check if the token has more words
+	 * increament the argument count for the word
+	 * */
+
+	token = strtok(input, " ");
+
+        argc = 0;
+	while (token != NULL && argc < MAX_ARGUMENTS - 1) {
+	    args[argc++] = token;
+    	    token = strtok(NULL, " ");
+        }
+
+	/* set last element of args array to Null for evecvp
+	 * */
+	args[argc] = NULL;
 
         /* Fork a new process has same data with parent and child however 
 	 * different pid's hence parent and child still want to see how 
@@ -51,9 +76,9 @@ int main() {
             exit(EXIT_FAILURE);
         } else if (pid == 0) {
             /* Child process from the old replaced proccess  */
-            execlp(command, command, (char *)NULL);
+            execvp(args[0], args);
 
-            /* If execlp fails, print an error message */
+            /* If execvp fails, print an error message */
             perror("Error");
             exit(EXIT_FAILURE);
         } else {
