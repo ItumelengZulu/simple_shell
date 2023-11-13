@@ -13,8 +13,8 @@
  * */
 
 #define MAX_COMMAND_LENGTH 120
-#define MAX_ARGUMENTS 9
-
+#define MAX_ARGUMENTS 12
+#define MAX_PATH_LENGTH 120
 void display_prompt() {
     printf("$ "); /* Display a simple prompt i know that dollar sign */
 }
@@ -23,6 +23,8 @@ int main() {
     pid_t pid;
     char *args[MAX_ARGUMENTS];
     char input[MAX_COMMAND_LENGTH];
+    char command_path[MAX_PATH_LENGTH];
+    char *path = "/bin"; 
 
     while (1) {
 	int argc;
@@ -62,15 +64,21 @@ int main() {
 	/* set last element of args array to Null for evecvp
 	 * */
 	args[argc] = NULL;
+	
+	/* check if the command exists in the specified path*/
+	snprintf(command_path, sizeof(command_path),  "%s/%s", path, args[0]);
+
 
         /* Fork a new process has same data with parent and child however 
 	 * different pid's hence parent and child still want to see how 
 	 * multiple processes are added, nested if's mayba?
 	 * */
+	
+	if (access(command_path, X_OK) ==0) {
 
-   	 pid = fork();
+   	   pid = fork();
 
-        if (pid == -1) {
+        }if (pid == -1) {
             /* Forking error */
             perror("Fork failed");
             exit(EXIT_FAILURE);
@@ -99,6 +107,6 @@ int main() {
     }
 
     printf("Exiting shell.\n");
-    return 0;
-}
+    return 0; /*line addded to indicate successful program termination */
+    }
 
