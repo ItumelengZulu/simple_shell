@@ -65,6 +65,12 @@ int main() {
 	 * */
 	args[argc] = NULL;
 	
+    /* this function tests for the built in exit function */
+    if (strcmp(args[0], "exit" == 0)) {
+        printf("EXITing shell. \n");
+        return 0;
+    }
+
 	/* check if the command exists in the specified path*/
 	snprintf(command_path, sizeof(command_path),  "%s/%s", path, args[0]);
 
