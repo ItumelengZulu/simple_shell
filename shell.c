@@ -15,6 +15,8 @@
 #define MAX_COMMAND_LENGTH 120
 #define MAX_ARGUMENTS 12
 #define MAX_PATH_LENGTH 120
+
+extern char ** environ;
 void display_prompt() {
     printf("$ "); /* Display a simple prompt i know that dollar sign */
 }
@@ -29,6 +31,7 @@ int main() {
     while (1) {
 	int argc;
 	char *token;
+    char ** env;
 
         display_prompt();
 
@@ -65,10 +68,19 @@ int main() {
 	 * */
 	args[argc] = NULL;
 	
-    /* this function tests for the built in exit function */
-    if (strcmp(args[0], "exit" == 0)) {
+    /* this function tests for the built in "exit" command */
+    if (strcmp(args[0], "exit") == 0) {
         printf("EXITing shell. \n");
         return 0;
+    }
+
+    /* this function  checks the command "env" and
+    * prints the current enviroment */
+    if (strcmp(args[0], "env") == 0) {
+        for (env = environ; *env != NULL; env++) {
+            printf("%s\n", *env);
+        }
+        continue;
     }
 
 	/* check if the command exists in the specified path*/
