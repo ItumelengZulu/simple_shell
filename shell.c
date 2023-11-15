@@ -49,10 +49,11 @@ int main() {
     char command_path[MAX_PATH_LENGTH];
     char *path = "/bin";
     char **env;
+    int exit_status;
     
 
     while (1) {
-        /*int argc;*/
+        int argc =0;
 
         display_prompt();
 
@@ -67,8 +68,14 @@ int main() {
 
         /* Check for built-in commands */
         if (strcmp(args[0], "exit") == 0) {
-            printf("Exiting shell.\n");
-            return 0;
+            if (argc > 1) {
+                exit_status = atoi(args[1]);
+                printf("Exiting shell with status %d.\n", exit_status);
+                return exit_status;
+            } else {
+                printf("Exiting shell.\n");
+                return 0;
+            }
         } else if (strcmp(args[0], "env") == 0) {
             for (env = environ; *env != NULL; env++) {
                 printf("%s\n", *env);
