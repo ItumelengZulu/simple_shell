@@ -22,6 +22,13 @@ void display_prompt() {
     printf("$ "); /* Display a simple prompt i know that dollar sign */
 }
 
+void change_directory(const char *directory) {
+    if (directory == NULL) {
+        fprintf(stderr, "cd: missing argument\n");
+    } else if (chdir(directory) != 0) {
+        perror("cd");
+    }
+}
 
 int tokenize_input(char *input, char *args[]) {
     int argc = 0;
@@ -80,6 +87,32 @@ int main() {
             for (env = environ; *env != NULL; env++) {
                 printf("%s\n", *env);
             }
+        continue;
+
+        } else if (strcmp(args[0], "setenv") == 0) {
+            /* Check if both VARIABLE and VALUE are provided */
+            if (argc != 3) {
+                fprintf(stderr, "Usage: setenv VARIABLE VALUE\n");
+            } else {
+                /* Set or modify the environment variable */
+                if (setenv(args[1], args[2], 1) != 0) {
+                    fprintf(stderr, "Failed to set environment variable %s\n", args[1]);
+                }
+            }
+            continue;
+        } else if (strcmp(args[0], "unsetenv") == 0) {
+            /* Check if VARIABLE is provided */
+            if (argc != 2) {
+                fprintf(stderr, "Usage: unsetenv VARIABLE\n");
+            } else {
+                /* Unset the environment variable */
+                if (unsetenv(args[1]) != 0) {
+                    fprintf(stderr, "Failed to unset environment variable %s\n", args[1]);
+                }
+            }
+            } else if (strcmp(args[0], "cd") == 0) {
+            /* Implementation for cd */
+            change_directory(args[1]);
             continue;
         }
 
