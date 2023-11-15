@@ -3,13 +3,14 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
+#include "mygetline.h"
 /*
  * this is my first shell, it doesnt do much so far but i am hoping to 
  * add more cool features and also learn how to add, modify then write
  * that cool documentation on how it works and how it was built
  * i could write a book in betty ('*.*')
  * its to clean
+ * this is more challenging than i initially expected 
  * */
 
 #define MAX_COMMAND_LENGTH 120
