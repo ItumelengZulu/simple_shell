@@ -3,25 +3,16 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "mygetline.h"
-/*
- * this is my first shell, it doesnt do much so far but i am hoping to 
- * add more cool features and also learn how to add, modify then write
- * that cool documentation on how it works and how it was built
- * i could write a book in betty ('*.*')
- * its to clean
- * this is more challenging than i initially expected 
- * */
+
+extern char **environ;
 
 #define MAX_COMMAND_LENGTH 120
 #define MAX_ARGUMENTS 12
 #define MAX_PATH_LENGTH 120
 
-extern char ** environ;
 void display_prompt() {
-    printf("$ "); /* Display a simple prompt i know that dollar sign */
+    printf("$ ");
 }
-
 
 int tokenize_input(char *input, char *args[]) {
     int argc = 0;
@@ -49,10 +40,9 @@ int main() {
     char command_path[MAX_PATH_LENGTH];
     char *path = "/bin";
     char **env;
-    
 
     while (1) {
-        /*int argc;*/
+        int argc;
 
         display_prompt();
 
@@ -63,7 +53,7 @@ int main() {
 
         input[strcspn(input, "\n")] = '\0';
 
-        tokenize_input(input, args);
+        argc = tokenize_input(input, args);
 
         /* Check for built-in commands */
         if (strcmp(args[0], "exit") == 0) {
@@ -106,3 +96,4 @@ int main() {
     printf("Exiting shell.\n");
     return 0;
 }
+
