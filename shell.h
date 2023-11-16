@@ -14,6 +14,12 @@
 
 #define MAX_ARGS 128
 #define MAX_BUFFER_SIZE 1024
+
+typedef struct list_s
+{
+    char *str;
+    struct list_s *next;
+} list_t;
 /**
  *h file 
  */
@@ -26,5 +32,8 @@ char *find_command_in_path(const char *command);
 void exit_shell(void);
 void env_shell(void);
 char *custom_getline(void);
+void free_list(list_t *head);
+list_t *add_node_end(list_t **head, const char *str);
+void cd_builtin(char **args);
 
 #endif /* SHELL_H */
