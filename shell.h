@@ -1,7 +1,7 @@
 #ifndef SHELL_H
 #define SHELL_H
-/*
- *The kjxjhcjxh
+/**
+ *Get a local checker for all projects
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,13 +10,15 @@
 #include <stdbool.h>
 #include <sys/wait.h>
 
-/*
- *thebse aibfbskf
+#define MAX_ARGS 128
+/**
+ * On the 3rd try its finally working
  */
 void display_prompt(void);
 void hsh_print(const char *message);
 void read_command(char *command, size_t size);
 void execute_command(const char *command);
+void parse_args(const char *command, char *args[]);
 
 
 

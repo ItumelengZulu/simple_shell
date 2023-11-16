@@ -10,15 +10,8 @@ void execute_command(const char *command) {
         /* Child process */
 
         /* Parse the command and its arguments */
-        char *args[128]; /* Maximum 128 arguments (adjust as needed) */
-        int arg_count = 0;
-
-        char *token = strtok((char *)command, " ");
-        while (token != NULL && arg_count < 127) {
-            args[arg_count++] = token;
-            token = strtok(NULL, " ");
-        }
-        args[arg_count] = NULL; /* Null-terminate the arguments array */
+        char *args[MAX_ARGS]; /* Maximum 128 arguments (adjust as needed) */
+        parse_args(command, args);
 
         /* Execute the command */
         execvp(args[0], args);
