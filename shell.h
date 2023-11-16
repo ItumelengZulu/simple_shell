@@ -14,6 +14,7 @@
 
 #define MAX_ARGS 128
 #define MAX_BUFFER_SIZE 1024
+#define MAX_COMMANDS 128
 
 typedef struct list_s
 {
@@ -34,6 +35,8 @@ void env_shell(void);
 char *custom_getline(void);
 void free_list(list_t *head);
 list_t *add_node_end(list_t **head, const char *str);
+void setenv_builtin(char **args);
+void unsetenv_builtin(char **args);
 void cd_builtin(char **args);
 
 #endif /* SHELL_H */
