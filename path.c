@@ -1,42 +1,32 @@
 #include "shell.h"
 
-char *find_command(const char *command) {
-    /* Get the PATH environment variable */
+/**
+ * Search for a command in the directories listed in PATH.
+ * If found, return the full path; otherwise, return NULL.
+ */
+char *find_command_in_path(const char *command)
+{
     char *path = getenv("PATH");
-    if (path == NULL) {
-        perror("Error getting PATH");
-        exit(EXIT_FAILURE);
-    }
-
-    /* Tokenize the PATH variable */
     char *path_copy = strdup(path);
-    if (path_copy == NULL) {
-        perror("Error duplicating PATH");
-        exit(EXIT_FAILURE);
-    }
+    char *dir = strtok(path_copy, ":");
 
-    /* Check each directory in PATH for the command */
-    char *token = strtok(path_copy, ":");
-    while (token != NULL) {
-        /* Construct the full path to the command */
-        char full_path[MAX_PATH];
-        if (snprintf(full_path, sizeof(full_path), "%s/%s", token, command) < 0) {
-            perror("Error constructing full path");
+    while (dir != NULL)
+    {
+        char cmd_path[256];
+        snprintf(cmd_path, sizeof(cmd_path), "%s/%s", dir, command);
+
+        if (access(cmd_path, X_OK) == 0)
+        {
+            /* Command found in the current directory in PATH */
             free(path_copy);
-            exit(EXIT_FAILURE);
+            return strdup(cmd_path);
         }
 
-        /* Check if the command exists at the current path */
-        if (access(full_path, X_OK) == 0) {
-            char *result = strdup(full_path);
-            free(path_copy);
-            return result;
-        }
-
-        /* Move to the next directory in PATH */
-        token = strtok(NULL, ":");
+        dir = strtok(NULL, ":");
     }
 
+    /* Command not found in PATH */
     free(path_copy);
     return NULL;
 }
+

@@ -1,9 +1,5 @@
 #include "shell.h"
 
-/**
- * this segment of the code is meant to handle arguments
-*/
-
 void parse_args(const char *command, char *args[]) {
     int arg_count = 0;
 
