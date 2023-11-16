@@ -1,20 +1,29 @@
 #include "shell.h"
+#include <string.h> 
 
 void execute_command(const char *command) {
-    pid_t child_pid = fork();
+    char *full_path = find_command(command);
+
+    if (full_path == NULL) {
+        fprintf(stderr, "Command not found: %s\n", command);
+        return;
+    }
+
+    pid_t child_pid;
+
+    child_pid = fork();
 
     if (child_pid == -1) {
         perror("Error forking process");
         exit(EXIT_FAILURE);
     } else if (child_pid == 0) {
         /* Child process */
-
         /* Parse the command and its arguments */
         char *args[MAX_ARGS]; /* Maximum 128 arguments (adjust as needed) */
         parse_args(command, args);
 
-        /* Execute the command */
-        execvp(args[0], args);
+        /* Execute the command with the full path */
+        execvp(full_path, args);
 
         /* If execvp fails, print an error message */
         perror("Error executing command");
@@ -37,4 +46,6 @@ void execute_command(const char *command) {
             fprintf(stderr, "Command terminated by signal %d\n", signal_number);
         }
     }
+
+    free(full_path);
 }
