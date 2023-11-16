@@ -13,6 +13,15 @@ void execute_command(const char *command) {
         char *args[MAX_ARGS]; /* Maximum 128 arguments (adjust as needed) */
         parse_args(command, args);
 
+         /* Check for the built-in commands */
+        if (strcmp(args[0], "exit") == 0) {
+            exit_shell();
+        } else if (strcmp(args[0], "env") == 0) {
+            env_shell();
+            exit(EXIT_SUCCESS); /* Exit after printing environment */
+        }
+
+
         /* Execute the command */
         execvp(args[0], args);
 

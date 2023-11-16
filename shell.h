@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <stdarg.h>
 
 #define MAX_ARGS 128
 /*
@@ -22,5 +23,6 @@ void execute_command(const char *command);
 void parse_args(const char *command, char *args[]);
 char *find_command_in_path(const char *command);
 void exit_shell(void);
+void env_shell(void);
 
 #endif /* SHELL_H */
