@@ -21,5 +21,6 @@ void read_command(char *command, size_t size);
 void execute_command(const char *command);
 void parse_args(const char *command, char *args[]);
 char *find_command_in_path(const char *command);
+void exit_shell(void);
 
 #endif /* SHELL_H */
