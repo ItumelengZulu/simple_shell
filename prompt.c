@@ -1,6 +1,7 @@
 #include "shell.h"
 
-void display_prompt(void) {
-    hsh_print("hsh_shell$ ");
+void display_prompt(void)
+{
+printf("simple_shell$ ");
 }
 
