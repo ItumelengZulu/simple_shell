@@ -1,9 +1,4 @@
 #include "shell.h"
-/**
- * encapsulates logic of forking
- * returns the pID (pid_t) of the newly created child process.
- * perror is retuned if the fork fails
-*/
 
 pid_t create_child_process(void)
 {
