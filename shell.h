@@ -1,3 +1,7 @@
+/**
+ * this is my .h file which does all the linking
+ * of my program function and variables
+*/
 #ifndef SHELL_H
 #define SHELL_H
 
@@ -8,7 +12,10 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-extern char **environ;
+/**
+ * Accesses the environment variables
+*/
+extern char **environ; 
 
 void display_prompt(void);
 char *read_command(void);

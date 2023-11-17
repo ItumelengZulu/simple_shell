@@ -1,4 +1,9 @@
 #include "shell.h"
+/**
+ * this function handles the process status
+ * checks the status of the last executed command
+ * and returns its exit status
+*/
 
 static int status;
 

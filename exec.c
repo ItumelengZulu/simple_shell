@@ -1,4 +1,10 @@
 #include "shell.h"
+/**
+ * This function is responsible for creating a child process
+ * using the fork system call 
+ * then replacing the child process 
+ * with a new program using the execlp system call
+*/
 
 void execute_command(char *command)
 {
