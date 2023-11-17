@@ -2,7 +2,7 @@
 /**
  * this read function uses getline to read
  * user input from the shell
- * it gets the information line by line hence 
+ * it gets the information line by line hence
  * getline
 */
 

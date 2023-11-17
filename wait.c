@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
- * ensures that the parent( the shell) 
- * waits fot the child before continuing 
+ * ensures that the parent( the shell)
+ * waits fot the child before continuing
  * execution
 */
 

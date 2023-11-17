@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * this function returns the ppid 
+ * this function returns the ppid
  * which is the parent procces id
 */
 
